@@ -1,3 +1,5 @@
+Python-only fork based on [secarri/MipFlooding](https://github.com/secarri/MipFlooding/tree/4d8c80a15a3bf04009f1e16d90f9dfa6ce18a868) with some refinements to the algorithm. For the current C# + Python implementation, see [original repo](https://github.com/secarri/MipFlooding).
+
 # Mip Flooding
 
 [![Sergi Carrion](https://img.shields.io/badge/secarri-open%20source-blueviolet.svg)](https://es.linkedin.com/in/secarri)
