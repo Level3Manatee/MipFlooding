@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import List, Optional
 
 # Third party packages
-from PIL import Image, ImageMath, ImageChops
+from PIL import Image
 import numpy as np
 
 # From self package
@@ -25,9 +25,11 @@ def _open_image_inputs(color: str, alpha: str, logger: logging.Logger) -> List:
     color_map = None if not Path(color).exists() else Image.open(color)
     if color_map:
         logger.info(f"--- File disk size: {os.path.getsize(color) / float(1 << 20):,.2f} MB")
-    alpha_mask = None if not Path(alpha).exists() else Image.open(alpha).split()[0]
-    if alpha_mask.mode != "L":
-        alpha_mask = alpha_mask.convert("L")
+    alpha_mask = None
+    if Path(alpha).exists():
+        alpha_mask = Image.open(alpha).split()[0]
+        if alpha_mask.mode != "L":
+            alpha_mask = alpha_mask.convert("L")
     return [color_map, alpha_mask]
 
 
@@ -143,7 +145,7 @@ def run_mip_flooding(in_texture_color_abs_path: str, in_texture_alpha_abs_path: 
         out_abs_path (str): The absolute path for the output image.
 
     Example:
-        run_mip_flooding_weighted('input_color.png', 'input_alpha.png', 'output_texture.png')
+        run_mip_flooding('input_color.png', 'input_alpha.png', 'output_texture.png')
     """
     start_time = time.perf_counter()
     out_directory = get_output_directory(out_abs_path)
